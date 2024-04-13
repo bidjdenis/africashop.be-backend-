@@ -1,5 +1,6 @@
 package africashop.be.entities;
 
+import africashop.be.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -18,6 +19,6 @@ public class User {
 
     private String password;
 
-   // private UserRole role;
+   private UserRole role;
 
 }

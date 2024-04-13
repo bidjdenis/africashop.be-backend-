@@ -1,5 +1,6 @@
 package africashop.be.entities;
 
+import africashop.be.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -24,7 +25,7 @@ public class Order {
     private String address;
 
 
-   // private OrderStatus orderStatus;
+   private OrderStatus orderStatus;
 
     private Double totalAmount;
     private Double discount;
