@@ -40,7 +40,9 @@ public class CategoryController {
     }
 
     @PutMapping("/category/update/{id}")
-    public Category updateCategory(@PathVariable Long id, Category category){
-        return categoryService.updateCategory(id,category);
+    public Category updateCategory(@RequestBody Category category, @PathVariable Long id){
+        Category category1 = new Category();
+        category1.setName(category.getName());
+        return categoryService.updateCategory(category,id);
     }
 }

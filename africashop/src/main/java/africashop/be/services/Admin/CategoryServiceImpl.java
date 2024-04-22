@@ -3,6 +3,7 @@ package africashop.be.services.Admin;
 import africashop.be.Repositories.CategoryRepo;
 import africashop.be.dtos.CategoryDto;
 import africashop.be.entities.Category;
+import africashop.be.exceptions.ValidationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,9 +41,11 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public Category updateCategory(Long id, Category category) {
-        Category category1 = categoryRepo.findById(id).get();
+    public Category updateCategory(Category category,Long id ) {
+        Category category1 = this.getOneCategory(id);
+
         category1.setName(category.getName());
-        return categoryRepo.save(category1);
+       return categoryRepo.save(category1);
     }
+
 }
