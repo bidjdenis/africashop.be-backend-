@@ -1,5 +1,6 @@
 package africashop.be.entities;
 
+import africashop.be.dtos.ProductDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -34,4 +35,20 @@ public class Product {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Country country;
+
+
+    public ProductDto getDto() {
+        ProductDto productDto = new ProductDto();
+        productDto.setId(id);
+        productDto.setName(name);
+        productDto.setPrice(price);
+        productDto.setWeight(weight);
+        productDto.setDescription(description);
+        productDto.setByteImg(img);
+        productDto.setCategoryId(category.getId());
+        productDto.setCategoryName(category.getName());
+        productDto.setCountryId(country.getId());
+        productDto.setCountryName(country.getName());
+        return productDto;
+    }
 }
