@@ -10,6 +10,8 @@ import africashop.be.entities.Product;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -40,5 +42,11 @@ public class ProductServiceImpl implements ProductService{
         product.setCategory(category);
         product.setCountry(country);
         return productRepo.save(product).getDto();
+    }
+
+    @Override
+    public List<ProductDto> getAllProduct() {
+        List<Product> products = productRepo.findAll();
+        return products.stream().map(Product :: getDto).collect(Collectors.toList());
     }
 }
