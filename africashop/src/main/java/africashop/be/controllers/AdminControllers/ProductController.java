@@ -31,4 +31,29 @@ public class ProductController {
         List<ProductDto> productList = productService.getAllProduct();
         return ResponseEntity.ok(productList);
     }
+
+    @DeleteMapping("/product/{id}")
+    public void deleteProduct(@PathVariable Long id){
+        productService.deleteProduct(id);
+    }
+
+    @PutMapping("/product/update/{id}")
+    ResponseEntity<ProductDto> updateProduct(@PathVariable Long id, @ModelAttribute ProductDto productDto) throws IOException{
+        ProductDto productDto1 = productService.updateProduct(id,productDto);
+        if(productDto1 != null){
+           return ResponseEntity.ok(productDto1);
+        }else{
+          return   ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("get/product/{id}")
+    ResponseEntity<ProductDto> getProductById(@PathVariable Long id){
+        ProductDto productDto = productService.getProductById(id);
+        if(productDto != null){
+            return ResponseEntity.ok(productDto);
+        }else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

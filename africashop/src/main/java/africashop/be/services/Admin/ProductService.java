@@ -12,5 +12,11 @@ public interface ProductService {
 
     List<ProductDto> getAllProduct();
 
+    void deleteProduct(Long id);
+
+    ProductDto updateProduct(Long id, ProductDto productDto) throws IOException;
+
+    ProductDto getProductById(Long id);
+
 
 }

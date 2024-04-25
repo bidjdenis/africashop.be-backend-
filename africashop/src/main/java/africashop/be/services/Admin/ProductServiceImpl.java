@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -49,4 +50,47 @@ public class ProductServiceImpl implements ProductService{
         List<Product> products = productRepo.findAll();
         return products.stream().map(Product :: getDto).collect(Collectors.toList());
     }
+
+    @Override
+    public void deleteProduct(Long id) {
+        productRepo.deleteById(id);
+    }
+
+    @Override
+    public ProductDto updateProduct(Long id, ProductDto productDto) throws IOException {
+        Optional<Product> optionalProduct = productRepo.findById(id);
+        Optional<Category> optionalCategory = categoryRepo.findById(productDto.getCategoryId());
+        Optional<Country> optionalCountry = countryRepo.findById(productDto.getCountryId());
+
+        if(optionalProduct.isPresent() && optionalCategory.isPresent() && optionalCountry.isPresent()){
+            Product product = optionalProduct.get();
+
+            product.setName(productDto.getName());
+            product.setPrice(productDto.getPrice());
+            product.setWeight(productDto.getWeight());
+            product.setDescription(productDto.getDescription());
+            product.setCategory(optionalCategory.get());
+            product.setCountry(optionalCountry.get());
+            if(productDto.getImg() != null){
+                product.setImg(productDto.getImg().getBytes());
+            }
+            return productRepo.save(product).getDto();
+
+        }else{
+            return null;
+        }
+    }
+
+    @Override
+    public ProductDto getProductById(Long id) {
+        Optional<Product> optionalProduct = productRepo.findById(id);
+        if(optionalProduct.isPresent()){
+            return optionalProduct.get().getDto();
+        }
+        else {
+            return null;
+        }
+    }
+
+
 }
