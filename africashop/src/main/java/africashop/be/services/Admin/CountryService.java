@@ -12,4 +12,6 @@ public interface CountryService {
     List<CountryDto> getAllCountry();
 
     void deleteCountry(Long id);
+
+    CountryDto updateCountry(Long id, CountryDto countryDto)  throws IOException;
 }

@@ -35,4 +35,14 @@ public class CountryController {
     public void deleteCountry(@PathVariable Long id){
         countryService.deleteCountry(id);
     }
+
+    @PutMapping("/country/update/{id}")
+    public ResponseEntity<CountryDto> updateCountry(@PathVariable Long id, @RequestBody CountryDto countryDto) throws IOException{
+        CountryDto countryDto1 = countryService.updateCountry(id,countryDto);
+        if(countryDto1 != null){
+            return ResponseEntity.ok(countryDto1);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
