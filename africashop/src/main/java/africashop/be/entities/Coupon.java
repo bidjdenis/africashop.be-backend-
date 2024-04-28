@@ -1,5 +1,6 @@
 package africashop.be.entities;
 
+import africashop.be.dtos.CouponDto;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -20,4 +21,6 @@ public class Coupon {
     private Long discount;
 
     private Date expirationDate;
+
+
 }
