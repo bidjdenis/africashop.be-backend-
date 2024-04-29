@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -33,4 +34,21 @@ public class CouponController {
     @GetMapping("/coupons")
     public ResponseEntity<List<Coupon>>getAllCoupons(){
         return ResponseEntity.ok(couponService.getAllCoupon());}
+
+    @DeleteMapping("/coupon/{id}")
+    public void deleteCoupon(@PathVariable Long id){
+        couponService.deleteCoupon(id);
+    }
+
+    @PutMapping("/coupon/update/{id}")
+    public ResponseEntity<Coupon> updateCoupon(@PathVariable Long id, @ModelAttribute Coupon coupon) throws IOException {
+        Coupon coupon1 = couponService.updateCoupon(id,coupon);
+        if(coupon1 != null){
+            return ResponseEntity.ok(coupon1);
+        }else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
+
+

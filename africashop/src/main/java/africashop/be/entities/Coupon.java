@@ -1,8 +1,8 @@
 package africashop.be.entities;
 
-import africashop.be.dtos.CouponDto;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -20,7 +20,9 @@ public class Coupon {
 
     private Long discount;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd") 
     private Date expirationDate;
+
 
 
 }
