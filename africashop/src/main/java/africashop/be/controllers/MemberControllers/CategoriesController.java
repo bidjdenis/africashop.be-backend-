@@ -1,4 +1,4 @@
-package africashop.be.controllers;
+package africashop.be.controllers.MemberControllers;
 
 import africashop.be.entities.Category;
 import africashop.be.services.Member.CategoriesService;
@@ -11,11 +11,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/member")
-public class MemberControllers {
+public class CategoriesController {
 
     private final CategoriesService categoriesService;
 
-    public MemberControllers(CategoriesService categoriesService) {
+    public CategoriesController(CategoriesService categoriesService) {
         this.categoriesService = categoriesService;
     }
 
