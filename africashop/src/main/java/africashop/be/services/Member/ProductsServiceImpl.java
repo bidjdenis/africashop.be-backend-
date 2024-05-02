@@ -22,4 +22,10 @@ public class ProductsServiceImpl implements ProductsServices{
         List<Product> productList = this.productRepo.findAll();
         return productList.stream().map(Product :: getDto).collect(Collectors.toList());
     }
+
+    @Override
+    public List<ProductDto> getProductByCountry(Long id) {
+        List<Product>  products = productRepo.findByCountryId(id);
+        return products.stream().map(Product :: getDto).collect(Collectors.toList());
+    }
 }

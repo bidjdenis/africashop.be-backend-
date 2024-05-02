@@ -7,4 +7,6 @@ import java.util.List;
 public interface ProductsServices {
 
     List<ProductDto> getAllProducts();
+    List<ProductDto> getProductByCountry(Long id);
+
 }
