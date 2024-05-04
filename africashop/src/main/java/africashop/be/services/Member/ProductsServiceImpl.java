@@ -28,4 +28,24 @@ public class ProductsServiceImpl implements ProductsServices{
         List<Product>  products = productRepo.findByCountryId(id);
         return products.stream().map(Product :: getDto).collect(Collectors.toList());
     }
+
+    @Override
+    public List<ProductDto> getProductByCategory(Long id) {
+        List<Product> products = productRepo.findByCategoryId(id);
+        return products.stream().map(this::converToDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public ProductDto converToDto(Product product) {
+        ProductDto productDto = new ProductDto();
+        productDto.setId(product.getId());
+        productDto.setName(product.getName());
+        productDto.setDescription(product.getDescription());
+        productDto.setPrice(product.getPrice());
+        productDto.setWeight(product.getWeight());
+        productDto.setByteImg(product.getImg());
+        productDto.setCategoryName(product.getCategory().getName());
+        productDto.setCountryName(product.getCountry().getName());
+        return productDto;
+    }
 }
