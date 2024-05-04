@@ -28,17 +28,25 @@ public class CartServiceImpl implements CartService{
 
     @Override
     public ResponseEntity<?> addToCart(ProductCartDto productCartDto) {
-        CartItems cartItems = new CartItems();
-        Product product = productRepo.findById(productCartDto.getProductId()).orElseThrow(() -> new ValidationException("Product not found"));
-        cartItems.setProduct(product);
-        User user = userRepo.findById(productCartDto.getUserId()).orElseThrow(()-> new ValidationException("user not found"));
-        cartItems.setUser(user);
-        cartItems.setId(cartItems.getId());
-        cartItems.setPrice(product.getPrice());
-        cartItems.setQuantity(1L);
-        CartItems cart = cartItemsRepo.save(cartItems);
-        return ResponseEntity.ok(cart);
+        Optional<CartItems> existingCartItemOptional = cartItemsRepo.findByProductIdAndUserId(productCartDto.getProductId(),productCartDto.getUserId());
+        if (existingCartItemOptional.isPresent()) {
+            CartItems existingCartItem = existingCartItemOptional.get();
+            existingCartItem.setQuantity(existingCartItem.getQuantity() + 1);
+            CartItems updatedCartItem = cartItemsRepo.save(existingCartItem);
+            return ResponseEntity.ok(updatedCartItem);
+        } else {
+            CartItems cartItems = new CartItems();
+            Product product = productRepo.findById(productCartDto.getProductId()).orElseThrow(() -> new ValidationException("Product not found"));
+            cartItems.setProduct(product);
+            User user = userRepo.findById(productCartDto.getUserId()).orElseThrow(()-> new ValidationException("User not found"));
+            cartItems.setUser(user);
+            cartItems.setPrice(product.getPrice());
+            cartItems.setQuantity(1L); 
+            CartItems savedCartItem = cartItemsRepo.save(cartItems);
+            return ResponseEntity.ok(savedCartItem);
+        }
     }
+
 
     @Override
     public List<CartItemsDto> getCart(Long userId) {
