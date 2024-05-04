@@ -32,4 +32,9 @@ public class CartItemsController {
     public ResponseEntity<List<CartItemsDto>> increaseProductQuantity(@RequestBody ProductCartDto productCartDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(cartService.increaseProductQuantity(productCartDto));
     }
+
+    @PostMapping("/deduction")
+    public ResponseEntity<List<CartItemsDto>> decreaseProductQuantity(@RequestBody ProductCartDto productCartDto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(cartService.decreaseProductQuantity(productCartDto));
+    }
 }

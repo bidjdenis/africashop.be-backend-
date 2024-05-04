@@ -78,6 +78,24 @@ public class CartServiceImpl implements CartService{
         return null;
     }
 
+    @Override
+    public List<CartItemsDto> decreaseProductQuantity(ProductCartDto productCartDto) {
+        Optional<Product> optionalProduct = productRepo.findById(productCartDto.getProductId());
+        Optional<CartItems> optionalCartItem = cartItemsRepo.findByProductIdAndUserId(
+                productCartDto.getProductId(), productCartDto.getUserId()
+        );
+        List<CartItemsDto> cartItemsDtoList = new ArrayList<>();
+        if(optionalProduct.isPresent() && optionalCartItem.isPresent()) {
+            CartItems cartItem = optionalCartItem.get();
+            Product product = optionalProduct.get();
+            cartItem.setQuantity(cartItem.getQuantity() - 1);
+            cartItemsRepo.save(cartItem);
+            cartItemsDtoList.add(cartItem.getCartDto());
+        }
+        return null;
+    }
+
+
 
 }
 

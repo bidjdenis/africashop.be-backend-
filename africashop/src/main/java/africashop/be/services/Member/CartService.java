@@ -14,4 +14,7 @@ public interface CartService {
 
     List<CartItemsDto> increaseProductQuantity(ProductCartDto productCartDto);
 
+    List<CartItemsDto> decreaseProductQuantity(ProductCartDto productCartDto);
+
+
 }
