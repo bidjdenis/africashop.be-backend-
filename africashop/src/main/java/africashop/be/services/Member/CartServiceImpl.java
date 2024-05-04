@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -58,4 +59,27 @@ public class CartServiceImpl implements CartService{
         }
         return cartItemsDtoList ;
     }
+
+    @Override
+    public List<CartItemsDto> increaseProductQuantity(ProductCartDto productCartDto) {
+        Optional<Product> optionalProduct = productRepo.findById(productCartDto.getProductId());
+        Optional<CartItems> optionalCartItem = cartItemsRepo.findByProductIdAndUserId(
+                productCartDto.getProductId(), productCartDto.getUserId()
+        );
+        List<CartItemsDto> cartItemsDtoList = new ArrayList<>();
+        if(optionalProduct.isPresent() && optionalCartItem.isPresent()) {
+            CartItems cartItem = optionalCartItem.get();
+            Product product = optionalProduct.get();
+            cartItem.setQuantity(cartItem.getQuantity() + 1);
+            cartItemsRepo.save(cartItem);
+            cartItemsDtoList.add(cartItem.getCartDto());
+
+        }
+        return null;
+    }
+
+
 }
+
+
+

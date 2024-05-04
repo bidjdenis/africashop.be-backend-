@@ -4,6 +4,7 @@ import africashop.be.dtos.CartItemsDto;
 import africashop.be.dtos.ProductCartDto;
 import africashop.be.services.Member.CartService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,5 +26,10 @@ public class CartItemsController {
     public ResponseEntity<List<CartItemsDto>> getCartItems(@PathVariable Long id){
         List<CartItemsDto> cartItemsDtoList = cartService.getCart(id);
         return ResponseEntity.ok(cartItemsDtoList);
+    }
+
+    @PostMapping("/addition")
+    public ResponseEntity<List<CartItemsDto>> increaseProductQuantity(@RequestBody ProductCartDto productCartDto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(cartService.increaseProductQuantity(productCartDto));
     }
 }
