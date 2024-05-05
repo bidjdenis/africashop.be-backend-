@@ -41,7 +41,7 @@ public class CartServiceImpl implements CartService{
             User user = userRepo.findById(productCartDto.getUserId()).orElseThrow(()-> new ValidationException("User not found"));
             cartItems.setUser(user);
             cartItems.setPrice(product.getPrice());
-            cartItems.setQuantity(1L); 
+            cartItems.setQuantity(1L);
             CartItems savedCartItem = cartItemsRepo.save(cartItems);
             return ResponseEntity.ok(savedCartItem);
         }
