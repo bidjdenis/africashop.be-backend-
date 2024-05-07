@@ -3,6 +3,9 @@ package africashop.be.entities;
 import africashop.be.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+
+import java.util.Date;
 
 @Data
 @Entity
@@ -18,6 +21,7 @@ public class User {
     private String name;
 
     private String password;
+    private Date createdDate ;
 
    private UserRole role;
 

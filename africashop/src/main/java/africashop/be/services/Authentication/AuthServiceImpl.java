@@ -9,6 +9,7 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -27,6 +28,7 @@ public class AuthServiceImpl implements AuthService{
         user.setName(signupRequest.getName());
         user.setEmail(signupRequest.getEmail());
         user.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
+        user.setCreatedDate(new Date());
         user.setRole(UserRole.MEMBER);
 
         User createdUser = userRepo.save(user);
@@ -46,6 +48,7 @@ public class AuthServiceImpl implements AuthService{
             user.setName("admin");
             user.setEmail("admin@shop.com");
             user.setPassword(passwordEncoder.encode("admin"));
+            user.setCreatedDate(new Date());
             user.setRole(UserRole.ADMIN);
             userRepo.save(user);
         }
