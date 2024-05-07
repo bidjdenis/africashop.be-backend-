@@ -10,5 +10,7 @@ public interface WishlistService {
 
     ResponseEntity<?> addToWishList(ProductCartDto productCartDto);
     List<WishlistDto> getWishListByUserId(Long userId);
+    public void removeProductFromWishlist(Long productId);
+
 
 }

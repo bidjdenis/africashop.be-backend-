@@ -27,4 +27,10 @@ public class WishlistController {
         List<WishlistDto> wishListDtos  = wishlistService.getWishListByUserId(userId);
         return ResponseEntity.status(HttpStatus.OK).body(wishListDtos);
     }
+
+    @DeleteMapping("/remove/wishlist/{id}")
+    public ResponseEntity<?> deleteProductFromWishlist(@PathVariable Long id){
+        wishlistService.removeProductFromWishlist(id);
+        return ResponseEntity.ok().build();
+    }
 }

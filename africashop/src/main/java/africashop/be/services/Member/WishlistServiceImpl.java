@@ -9,6 +9,7 @@ import africashop.be.entities.Product;
 import africashop.be.entities.User;
 import africashop.be.entities.Wishlist;
 import africashop.be.exceptions.ValidationException;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -58,5 +59,12 @@ public class WishlistServiceImpl implements WishlistService{
             wishListDtos.add(wishListDto);
         }
         return wishListDtos;
+    }
+
+    @Transactional
+    @Override
+    public void removeProductFromWishlist(Long productId) {
+        wishlistRepo.deleteByProductId(productId);
+
     }
 }
