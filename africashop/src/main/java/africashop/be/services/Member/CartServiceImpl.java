@@ -9,6 +9,7 @@ import africashop.be.entities.CartItems;
 import africashop.be.entities.Product;
 import africashop.be.entities.User;
 import africashop.be.exceptions.ValidationException;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -103,8 +104,11 @@ public class CartServiceImpl implements CartService{
         return null;
     }
 
-
-
+    @Transactional
+    @Override
+    public void removeProductFromCart(Long productId) {
+        cartItemsRepo.deleteByProductId(productId);
+    }
 }
 
 

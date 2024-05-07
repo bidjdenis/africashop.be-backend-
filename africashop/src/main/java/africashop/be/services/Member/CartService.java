@@ -16,5 +16,5 @@ public interface CartService {
 
     List<CartItemsDto> decreaseProductQuantity(ProductCartDto productCartDto);
 
-
+    public void removeProductFromCart(Long productId);
 }

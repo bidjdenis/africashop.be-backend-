@@ -37,4 +37,11 @@ public class CartItemsController {
     public ResponseEntity<List<CartItemsDto>> decreaseProductQuantity(@RequestBody ProductCartDto productCartDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(cartService.decreaseProductQuantity(productCartDto));
     }
+
+    @DeleteMapping("/remove/{productId}")
+    public ResponseEntity<?> removeProductFromCart(@PathVariable Long productId) {
+        cartService.removeProductFromCart(productId);
+        return ResponseEntity.ok().build();
+    }
+
 }
