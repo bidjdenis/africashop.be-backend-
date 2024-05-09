@@ -1,5 +1,6 @@
 package africashop.be.controllers.MemberControllers;
 
+import africashop.be.dtos.ProductDetailDto;
 import africashop.be.dtos.ProductDto;
 import africashop.be.services.Member.ProductsServices;
 import org.springframework.http.ResponseEntity;
@@ -37,5 +38,12 @@ public class ProductsController {
     public ResponseEntity<List<ProductDto>> getProductByCategory(@PathVariable Long id) {
         List<ProductDto> productDtos = productsServices.getProductByCategory(id);
         return ResponseEntity.ok(productDtos);
+    }
+
+    @GetMapping("/product/{productId}")
+    public ResponseEntity<ProductDetailDto> getProductDetailById(@PathVariable Long productId){
+        ProductDetailDto productDetailDto = productsServices.getProductById(productId);
+        if(productDetailDto == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(productDetailDto);
     }
 }

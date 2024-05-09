@@ -1,5 +1,6 @@
 package africashop.be.services.Member;
 
+import africashop.be.dtos.ProductDetailDto;
 import africashop.be.dtos.ProductDto;
 import africashop.be.entities.Product;
 
@@ -11,5 +12,6 @@ public interface ProductsServices {
     List<ProductDto> getProductByCountry(Long id);
     List<ProductDto> getProductByCategory(Long id);
     ProductDto converToDto(Product product);
+    ProductDetailDto getProductById(Long productId);
 
 }

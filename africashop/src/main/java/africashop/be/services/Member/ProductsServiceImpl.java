@@ -1,11 +1,13 @@
 package africashop.be.services.Member;
 
 import africashop.be.Repositories.ProductRepo;
+import africashop.be.dtos.ProductDetailDto;
 import africashop.be.dtos.ProductDto;
 import africashop.be.entities.Product;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,5 +49,16 @@ public class ProductsServiceImpl implements ProductsServices{
         productDto.setCategoryName(product.getCategory().getName());
         productDto.setCountryName(product.getCountry().getName());
         return productDto;
+    }
+
+    @Override
+    public ProductDetailDto getProductById(Long productId) {
+        Optional<Product> optionalProduct = productRepo.findById(productId);
+        if(optionalProduct.isPresent()){
+            ProductDetailDto productDetailDto = new ProductDetailDto();
+            productDetailDto.setProductDto(optionalProduct.get().getDto());
+            return productDetailDto;
+        }
+        return null;
     }
 }
