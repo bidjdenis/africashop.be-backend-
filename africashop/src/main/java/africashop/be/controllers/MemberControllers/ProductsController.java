@@ -4,10 +4,7 @@ import africashop.be.dtos.ProductDetailDto;
 import africashop.be.dtos.ProductDto;
 import africashop.be.services.Member.ProductsServices;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -46,4 +43,11 @@ public class ProductsController {
         if(productDetailDto == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(productDetailDto);
     }
+
+    @GetMapping("/products/sort")
+    public ResponseEntity<List<ProductDto>> sortByPrice(@RequestParam boolean ascending) {
+        List<ProductDto> productDtos = productsServices.getProductsSortedByPrice(ascending);
+        return ResponseEntity.ok(productDtos);
+    }
+
 }

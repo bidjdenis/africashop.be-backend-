@@ -6,6 +6,8 @@ import africashop.be.dtos.ProductDto;
 import africashop.be.entities.Product;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -61,4 +63,19 @@ public class ProductsServiceImpl implements ProductsServices{
         }
         return null;
     }
+
+    @Override
+    public List<ProductDto> getProductsSortedByPrice(boolean ascending) {
+        List<Product> products = productRepo.findAll();
+        if (ascending) {
+            products.sort(Comparator.comparing(Product::getPrice));
+        } else {
+            products.sort((p1, p2) -> Double.compare(p2.getPrice(), p1.getPrice()));
+        }
+
+        List<ProductDto> productDtos = products.stream().map(Product::getDto).collect(Collectors.toList());
+        return productDtos;
+    }
+
+
 }
