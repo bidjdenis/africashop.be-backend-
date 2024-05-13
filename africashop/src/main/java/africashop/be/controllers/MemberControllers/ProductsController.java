@@ -19,6 +19,12 @@ public class ProductsController {
         this.productsServices = productsServices;
     }
 
+    @GetMapping("/products/pagination")
+    public ResponseEntity<List<ProductDto>> getProducts(@RequestParam(defaultValue = "0")int pageNumber){
+        List<ProductDto> productDtos = productsServices.getAllProductsPagination(pageNumber);
+        return ResponseEntity.ok(productDtos);
+    }
+
     @GetMapping("/products")
     public ResponseEntity<List<ProductDto>> getProducts(){
         List<ProductDto> productDtos = productsServices.getAllProducts();

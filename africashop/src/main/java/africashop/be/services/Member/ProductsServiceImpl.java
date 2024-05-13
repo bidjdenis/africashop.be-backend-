@@ -4,6 +4,9 @@ import africashop.be.Repositories.ProductRepo;
 import africashop.be.dtos.ProductDetailDto;
 import africashop.be.dtos.ProductDto;
 import africashop.be.entities.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,9 +25,19 @@ public class ProductsServiceImpl implements ProductsServices{
     }
 
     @Override
+    public List<ProductDto> getAllProductsPagination(int pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber, 12);
+        Page<Product> productPage = this.productRepo.findAll(pageable);
+        List<ProductDto> productDtoList = productPage.getContent().stream()
+                .map(Product::getDto)
+                .collect(Collectors.toList());
+        return productDtoList;
+    }
+
+    @Override
     public List<ProductDto> getAllProducts() {
-        List<Product> productList = this.productRepo.findAll();
-        return productList.stream().map(Product :: getDto).collect(Collectors.toList());
+        List<Product> products = productRepo.findAll();
+        return products.stream().map(Product::getDto).collect(Collectors.toList());
     }
 
     @Override

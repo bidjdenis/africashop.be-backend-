@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface ProductsServices {
 
+    List<ProductDto> getAllProductsPagination(int pageNumber);
     List<ProductDto> getAllProducts();
     List<ProductDto> getProductByCountry(Long id);
     List<ProductDto> getProductByCategory(Long id);
