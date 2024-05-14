@@ -51,9 +51,11 @@ public class ProductsController {
     }
 
     @GetMapping("/products/sort")
-    public ResponseEntity<List<ProductDto>> sortByPrice(@RequestParam boolean ascending) {
-        List<ProductDto> productDtos = productsServices.getProductsSortedByPrice(ascending);
-        return ResponseEntity.ok(productDtos);
+    public List<ProductDto> getAllProducts(
+            @RequestParam(defaultValue = "0") int pageNumber,
+            @RequestParam(defaultValue = "true") boolean ascending) {
+        return productsServices.getProductsSortedByPrice(pageNumber, ascending);
     }
+
 
 }

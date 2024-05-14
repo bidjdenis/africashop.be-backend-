@@ -14,6 +14,6 @@ public interface ProductsServices {
     List<ProductDto> getProductByCategory(Long id);
     ProductDto converToDto(Product product);
     ProductDetailDto getProductById(Long productId);
-    List<ProductDto> getProductsSortedByPrice(boolean ascending);
 
+    List<ProductDto> getProductsSortedByPrice(int pageNumber, boolean ascending);
 }
