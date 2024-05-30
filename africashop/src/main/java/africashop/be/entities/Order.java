@@ -4,7 +4,9 @@ import africashop.be.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -41,5 +43,7 @@ public class Order {
     @JoinColumn(name = "coupon_id", referencedColumnName = "id")
     private Coupon coupon;
 
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItems> orderItems = new ArrayList<>();
 
 }
