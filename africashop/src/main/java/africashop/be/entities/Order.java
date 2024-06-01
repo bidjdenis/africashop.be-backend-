@@ -26,6 +26,9 @@ public class Order {
 
     private String address;
 
+    private Long boite;
+
+    private Long codePostale;
 
    private OrderStatus orderStatus;
 

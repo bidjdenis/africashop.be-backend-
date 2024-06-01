@@ -1,6 +1,7 @@
 package africashop.be.controllers.MemberControllers;
 
 import africashop.be.dtos.CartItemsDto;
+import africashop.be.dtos.OrderDto;
 import africashop.be.services.Member.OrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,12 @@ public class OrderController {
         List<CartItemsDto> cartItemsDtoList = orderService.validationOrder(userId);
         return ResponseEntity.status(HttpStatus.OK).body(cartItemsDtoList);
 
+    }
+
+    @GetMapping("/cart/order/{userId}")
+    public ResponseEntity<?> getOrderByUserId(@PathVariable Long userId){
+        OrderDto orderDto = orderService.getOrderByUserId(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(orderDto);
     }
 
 }

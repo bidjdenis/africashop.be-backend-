@@ -5,6 +5,7 @@ import africashop.be.Repositories.OrderRepo;
 import africashop.be.Repositories.ProductRepo;
 import africashop.be.Repositories.UserRepo;
 import africashop.be.dtos.CartItemsDto;
+import africashop.be.dtos.OrderDto;
 import africashop.be.entities.CartItems;
 import africashop.be.entities.Order;
 import africashop.be.entities.OrderItems;
@@ -25,6 +26,8 @@ public class OrderServiceImpl implements OrderService{
     private final CartItemsRepo cartItemsRepo;
 
     private final OrderRepo orderRepo;
+
+    private final CartService cartService;
 
     @Override
     public List<CartItemsDto> validationOrder(Long userId) {
@@ -77,5 +80,26 @@ public class OrderServiceImpl implements OrderService{
             return cartItemsDtoList;
         }
 
+    @Override
+    public OrderDto getOrderByUserId(Long userId){
+        Order activeOrder = orderRepo.findByUserIdAndOrderStatus(userId, OrderStatus.Pending);
+        OrderDto orderDto = new OrderDto();
+        orderDto.setAmount(activeOrder.getAmount());
+        orderDto.setId(activeOrder.getId());
+        orderDto.setOrderStatus(activeOrder.getOrderStatus());
+        orderDto.setDiscount(activeOrder.getDiscount());
+        orderDto.setTotalAmount(activeOrder.getTotalAmount());
+
+        List<CartItemsDto> cartItemsDtoList = cartService.getCart(userId);
+        orderDto.setCartItems(cartItemsDtoList);
+
+        if(activeOrder.getCoupon() != null){
+            orderDto.setCouponName(activeOrder.getCoupon().getName());
+        }
+
+        return orderDto;
     }
+
+
+}
 
