@@ -1,5 +1,6 @@
 package africashop.be.entities;
 
+import africashop.be.dtos.OrderDto;
 import africashop.be.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -49,4 +50,23 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItems> orderItems = new ArrayList<>();
 
+    public OrderDto getOrderDto() {
+        OrderDto orderDto = new OrderDto();
+
+        orderDto.setId(id);
+        orderDto.setOrderDescription(city);
+        orderDto.setAddress(address);
+        orderDto.setBoite(boite);
+        orderDto.setCodePostale(codePostale);
+        orderDto.setTrackingId(trackingId);
+        orderDto.setDate(date);
+        orderDto.setAmount(amount);
+        orderDto.setOrderStatus(orderStatus);
+        orderDto.setUserName(user.getName());
+        orderDto.setEmail(user.getEmail());
+        if(coupon != null){
+            orderDto.setCouponName(coupon.getName());
+        }
+        return orderDto;
+    }
 }

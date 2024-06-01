@@ -2,6 +2,7 @@ package africashop.be.controllers.MemberControllers;
 
 import africashop.be.dtos.CartItemsDto;
 import africashop.be.dtos.OrderDto;
+import africashop.be.exceptions.ValidationException;
 import africashop.be.services.Member.OrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,6 +32,16 @@ public class OrderController {
     public ResponseEntity<?> getOrderByUserId(@PathVariable Long userId){
         OrderDto orderDto = orderService.getOrderByUserId(userId);
         return ResponseEntity.status(HttpStatus.OK).body(orderDto);
+    }
+
+    @GetMapping("/coupon/{userId}/{code}")
+    public ResponseEntity<?> applyCoupon(@PathVariable Long userId, @PathVariable String code){
+        try {
+            OrderDto orderDto = this.orderService.applyCoupon(userId,code);
+            return ResponseEntity.ok(orderDto);
+        } catch (ValidationException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
 }

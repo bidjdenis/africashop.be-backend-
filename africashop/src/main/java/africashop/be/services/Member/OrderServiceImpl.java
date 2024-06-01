@@ -1,15 +1,9 @@
 package africashop.be.services.Member;
 
-import africashop.be.Repositories.CartItemsRepo;
-import africashop.be.Repositories.OrderRepo;
-import africashop.be.Repositories.ProductRepo;
-import africashop.be.Repositories.UserRepo;
+import africashop.be.Repositories.*;
 import africashop.be.dtos.CartItemsDto;
 import africashop.be.dtos.OrderDto;
-import africashop.be.entities.CartItems;
-import africashop.be.entities.Order;
-import africashop.be.entities.OrderItems;
-import africashop.be.entities.User;
+import africashop.be.entities.*;
 import africashop.be.enums.OrderStatus;
 import africashop.be.exceptions.ValidationException;
 import lombok.AllArgsConstructor;
@@ -28,6 +22,8 @@ public class OrderServiceImpl implements OrderService{
     private final OrderRepo orderRepo;
 
     private final CartService cartService;
+
+    private final CouponRepo couponRepo;
 
     @Override
     public List<CartItemsDto> validationOrder(Long userId) {
@@ -100,6 +96,34 @@ public class OrderServiceImpl implements OrderService{
         return orderDto;
     }
 
+    @Override
+    public OrderDto applyCoupon(Long userId, String code) {
+        Order activeOrder = orderRepo.findByUserIdAndOrderStatus(userId, OrderStatus.Pending);
+        Coupon coupon = this.couponRepo.findByCode(code).orElseThrow(()-> new ValidationException("Coupon not found"));
 
+        if(couponExpired(coupon)){
+            throw new ValidationException("coupon is expired");
+        }
+
+        if (activeOrder.getTotalAmount() < 20) {
+            throw new ValidationException("Total amount must be greater than 20 to apply a coupon.");
+        }
+
+        double discountAmount = ((coupon.getDiscount() / 100.0) * activeOrder.getTotalAmount());
+        double netAmount = activeOrder.getTotalAmount() - discountAmount;
+
+        activeOrder.setAmount(netAmount);
+        activeOrder.setCoupon(coupon);
+        activeOrder.setDiscount(discountAmount);
+        orderRepo.save(activeOrder);
+        return activeOrder.getOrderDto();
+    }
+
+    private boolean couponExpired(Coupon coupon) {
+        Date currentDate = new Date();
+        Date expirationDate = coupon.getExpirationDate();
+
+        return expirationDate != null && currentDate.after(currentDate);
+    }
 }
 
