@@ -2,6 +2,7 @@ package africashop.be.services.Member;
 
 import africashop.be.Repositories.*;
 import africashop.be.dtos.CartItemsDto;
+import africashop.be.dtos.CheckoutDto;
 import africashop.be.dtos.OrderDto;
 import africashop.be.entities.*;
 import africashop.be.enums.OrderStatus;
@@ -117,6 +118,33 @@ public class OrderServiceImpl implements OrderService{
         activeOrder.setDiscount(discountAmount);
         orderRepo.save(activeOrder);
         return activeOrder.getOrderDto();
+    }
+
+    @Override
+    public OrderDto checkout(CheckoutDto checkoutDto) {
+        Order activeOrder = orderRepo.findByUserIdAndOrderStatus(checkoutDto.getUserId(), OrderStatus.Pending);
+        Optional<User> optionalUser = userRepo.findById(checkoutDto.getUserId());
+
+        if(optionalUser.isPresent()) {
+            activeOrder.setCity(checkoutDto.getCity());
+            activeOrder.setAddress(checkoutDto.getAddress());
+            activeOrder.setBoite(checkoutDto.getBoite());
+            activeOrder.setCodePostale(checkoutDto.getCodePostale());
+
+            orderRepo.save(activeOrder);
+
+            return activeOrder.getOrderDto();
+        }
+        return null;
+    }
+
+    @Override
+    public OrderDto getOrderDetails(Long userId) {
+        Order order = orderRepo.findByUserIdAndOrderStatus(userId, OrderStatus.Pending);
+        if (order != null) {
+            return order.getOrderDto();
+        }
+        return null;
     }
 
     private boolean couponExpired(Coupon coupon) {
