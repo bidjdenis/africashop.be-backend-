@@ -11,5 +11,6 @@ public class CouponDto {
     private String name;
     private String code;
     private Long discount;
+    private String description;
     private Date expirationDate;
 }

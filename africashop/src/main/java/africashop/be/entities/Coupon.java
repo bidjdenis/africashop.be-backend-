@@ -20,6 +20,8 @@ public class Coupon {
 
     private Long discount;
 
+    private String description;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date expirationDate;
 
