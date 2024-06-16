@@ -71,7 +71,7 @@ public class Order {
             orderItemDto.setProductName(orderItem.getProduct().getName());
             orderItemDto.setQuantity(orderItem.getQuantity().intValue());
             orderItemDto.setPrice(orderItem.getProduct().getPrice());
-            byte[] imageBytes = orderItem.getProduct().getImg(); 
+            byte[] imageBytes = orderItem.getProduct().getImg();
             String base64Image = Base64.getEncoder().encodeToString(imageBytes);
             orderItemDto.setProcessedImg(base64Image);
             return orderItemDto;
