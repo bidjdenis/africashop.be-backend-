@@ -11,7 +11,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -37,5 +39,25 @@ public class ReviewServiceImpl implements ReviewService{
 
         }
         return null;
+    }
+
+    @Override
+    public List<ReviewDto> getReviewsByProductId(Long productId) {
+        List<Review> reviews = reviewRepo.findByProductId(productId);
+        return reviews.stream().map(this::convertToDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public ReviewDto convertToDto(Review review) {
+        ReviewDto dto = new ReviewDto();
+        dto.setId(review.getId());
+        dto.setRating(review.getRating());
+        dto.setDescription(review.getDescription());
+        dto.setReturnedImg(review.getImg());
+        dto.setProductId(review.getProduct().getId());
+        dto.setUserId(review.getUser().getId());
+        dto.setUsername(review.getUser().getName());
+        dto.setProductName(review.getProduct().getName());
+        return dto;
     }
 }
