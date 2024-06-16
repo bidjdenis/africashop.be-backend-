@@ -12,4 +12,5 @@ public interface OrderService {
     OrderDto applyCoupon(Long userId, String code);
     OrderDto checkout(CheckoutDto checkoutDto);
     OrderDto getOrderDetails(Long userId);
+   List<OrderDto> getMyOrders(Long userId);
 }

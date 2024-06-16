@@ -1,5 +1,6 @@
 package africashop.be.dtos;
 
+import africashop.be.entities.OrderItems;
 import africashop.be.enums.OrderStatus;
 import lombok.Data;
 
@@ -24,6 +25,7 @@ public class OrderDto {
     private String email;
     private String couponName;
     private List<CartItemsDto> cartItems;
+    private List<OrderItemDto> orderItems;
 
 
 }

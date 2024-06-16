@@ -52,4 +52,9 @@ public class OrderController {
         OrderDto orderDto = orderService.getOrderDetails(userId);
         return ResponseEntity.status(HttpStatus.OK).body(orderDto);
     }
+
+    @GetMapping("/myOrders/{userId}")
+    public ResponseEntity<List<OrderDto>> getMyPlacedOrders(@PathVariable Long userId){
+        return ResponseEntity.ok(orderService.getMyOrders(userId));
+    }
 }

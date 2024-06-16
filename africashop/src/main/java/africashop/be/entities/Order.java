@@ -1,14 +1,13 @@
 package africashop.be.entities;
 
 import africashop.be.dtos.OrderDto;
+import africashop.be.dtos.OrderItemDto;
 import africashop.be.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Data
 @Entity
@@ -67,6 +66,17 @@ public class Order {
         if(coupon != null){
             orderDto.setCouponName(coupon.getName());
         }
+        List<OrderItemDto> orderItemDtos = orderItems.stream().map(orderItem -> {
+            OrderItemDto orderItemDto = new OrderItemDto();
+            orderItemDto.setProductName(orderItem.getProduct().getName());
+            orderItemDto.setQuantity(orderItem.getQuantity().intValue());
+            orderItemDto.setPrice(orderItem.getProduct().getPrice());
+            byte[] imageBytes = orderItem.getProduct().getImg(); 
+            String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+            orderItemDto.setProcessedImg(base64Image);
+            return orderItemDto;
+        }).collect(Collectors.toList());
+        orderDto.setOrderItems(orderItemDtos);
         return orderDto;
     }
 }

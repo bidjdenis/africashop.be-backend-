@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -145,6 +146,12 @@ public class OrderServiceImpl implements OrderService{
             return order.getOrderDto();
         }
         return null;
+    }
+
+    @Override
+    public List<OrderDto> getMyOrders(Long userId) {
+        return orderRepo.findByUserIdAndOrderStatusIn(userId, List.of(OrderStatus.Placed, OrderStatus.Shipped,
+                OrderStatus.Delivered)).stream().map(Order::getOrderDto).collect(Collectors.toList());
     }
 
     private boolean couponExpired(Coupon coupon) {
