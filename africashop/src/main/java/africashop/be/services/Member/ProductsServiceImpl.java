@@ -92,5 +92,11 @@ public class ProductsServiceImpl implements ProductsServices{
         return productDtoList;
     }
 
+    @Override
+    public Product getProductDetail(Long id) {
+        Optional<Product> product = productRepo.findById(id);
+        return product.get();
+    }
+
 
 }

@@ -4,6 +4,7 @@ import africashop.be.dtos.CountryDto;
 import africashop.be.dtos.ProductDetailDto;
 import africashop.be.dtos.ProductDto;
 import africashop.be.entities.Category;
+import africashop.be.entities.Product;
 import africashop.be.services.Member.CountriesService;
 import africashop.be.services.Member.ProductsServices;
 import africashop.be.services.Visitor.VisitorService;
@@ -71,5 +72,11 @@ public class HomeController {
     @GetMapping("/categories")
     public List<Category> getAllCategories() {
         return this.visitorService.getAllCategories();
+    }
+
+    @GetMapping("/productDetail/{id}")
+    public ResponseEntity<Product> getProductDetail(@PathVariable Long id) {
+        Product productDetail = productsServices.getProductDetail(id);
+        return ResponseEntity.ok(productDetail);
     }
 }

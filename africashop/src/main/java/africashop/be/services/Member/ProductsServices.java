@@ -16,4 +16,7 @@ public interface ProductsServices {
     ProductDetailDto getProductById(Long productId);
 
     List<ProductDto> getProductsSortedByPrice(int pageNumber, boolean ascending);
+
+    Product getProductDetail(Long id);
+
 }
