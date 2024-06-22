@@ -5,6 +5,7 @@ import africashop.be.dtos.ProductDetailDto;
 import africashop.be.dtos.ProductDto;
 import africashop.be.dtos.ReviewDto;
 import africashop.be.entities.Category;
+import africashop.be.entities.Coupon;
 import africashop.be.entities.Product;
 import africashop.be.services.Member.CountriesService;
 import africashop.be.services.Member.ProductsServices;
@@ -87,5 +88,11 @@ public class HomeController {
     public ResponseEntity<List<ReviewDto>> getReviewsByProductId(@PathVariable Long productId) {
         List<ReviewDto> reviews = reviewService.getReviewsByProductId(productId);
         return ResponseEntity.ok(reviews);
+    }
+
+    @GetMapping("/coupons")
+    public ResponseEntity<List<Coupon>> getAllCoupons(){
+        List<Coupon> coupons = visitorService.getAllCoupons();
+        return ResponseEntity.ok(coupons);
     }
 }

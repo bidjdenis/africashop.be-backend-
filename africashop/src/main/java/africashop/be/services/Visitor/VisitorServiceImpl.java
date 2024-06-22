@@ -1,10 +1,12 @@
 package africashop.be.services.Visitor;
 
 import africashop.be.Repositories.CategoryRepo;
+import africashop.be.Repositories.CouponRepo;
 import africashop.be.Repositories.ProductRepo;
 import africashop.be.dtos.ProductDetailDto;
 import africashop.be.dtos.ProductDto;
 import africashop.be.entities.Category;
+import africashop.be.entities.Coupon;
 import africashop.be.entities.Product;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
 public class VisitorServiceImpl implements VisitorService{
     private final ProductRepo productRepo;
     private final CategoryRepo categoryRepo;
+    private final CouponRepo couponRepo;
     @Override
     public List<ProductDto> getAllProducts() {
         List<Product> products = this.productRepo.findAll();
@@ -96,6 +99,9 @@ public class VisitorServiceImpl implements VisitorService{
         return this.categoryRepo.findAll();
     }
 
+    @Override
+    public List<Coupon> getAllCoupons() {return couponRepo.findAll();
+    }
 
 
 }
