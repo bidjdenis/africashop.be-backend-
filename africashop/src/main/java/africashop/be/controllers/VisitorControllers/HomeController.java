@@ -3,10 +3,12 @@ package africashop.be.controllers.VisitorControllers;
 import africashop.be.dtos.CountryDto;
 import africashop.be.dtos.ProductDetailDto;
 import africashop.be.dtos.ProductDto;
+import africashop.be.dtos.ReviewDto;
 import africashop.be.entities.Category;
 import africashop.be.entities.Product;
 import africashop.be.services.Member.CountriesService;
 import africashop.be.services.Member.ProductsServices;
+import africashop.be.services.Member.ReviewService;
 import africashop.be.services.Visitor.VisitorService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,7 @@ public class HomeController {
     private final CountriesService countriesService;
     private final ProductsServices productsServices;
     private final VisitorService visitorService;
+    private final ReviewService reviewService;
 
 
 
@@ -78,5 +81,11 @@ public class HomeController {
     public ResponseEntity<Product> getProductDetail(@PathVariable Long id) {
         Product productDetail = productsServices.getProductDetail(id);
         return ResponseEntity.ok(productDetail);
+    }
+
+    @GetMapping("/review/{productId}")
+    public ResponseEntity<List<ReviewDto>> getReviewsByProductId(@PathVariable Long productId) {
+        List<ReviewDto> reviews = reviewService.getReviewsByProductId(productId);
+        return ResponseEntity.ok(reviews);
     }
 }
