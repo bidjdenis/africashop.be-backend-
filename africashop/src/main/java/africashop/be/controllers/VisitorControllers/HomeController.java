@@ -1,9 +1,6 @@
 package africashop.be.controllers.VisitorControllers;
 
-import africashop.be.dtos.CountryDto;
-import africashop.be.dtos.ProductDetailDto;
-import africashop.be.dtos.ProductDto;
-import africashop.be.dtos.ReviewDto;
+import africashop.be.dtos.*;
 import africashop.be.entities.Category;
 import africashop.be.entities.Coupon;
 import africashop.be.entities.Product;
@@ -16,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/public")
@@ -94,5 +92,12 @@ public class HomeController {
     public ResponseEntity<List<Coupon>> getAllCoupons(){
         List<Coupon> coupons = visitorService.getAllCoupons();
         return ResponseEntity.ok(coupons);
+    }
+
+    @GetMapping("/order/{trackingId}")
+    public ResponseEntity<OrderDto> searchOrderByTrackingId(@PathVariable UUID trackingId){
+        OrderDto orderDto = visitorService.searchOrderByTrackingId(trackingId);
+        if(orderDto == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(orderDto);
     }
 }

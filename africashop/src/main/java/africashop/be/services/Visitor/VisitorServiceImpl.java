@@ -2,11 +2,14 @@ package africashop.be.services.Visitor;
 
 import africashop.be.Repositories.CategoryRepo;
 import africashop.be.Repositories.CouponRepo;
+import africashop.be.Repositories.OrderRepo;
 import africashop.be.Repositories.ProductRepo;
+import africashop.be.dtos.OrderDto;
 import africashop.be.dtos.ProductDetailDto;
 import africashop.be.dtos.ProductDto;
 import africashop.be.entities.Category;
 import africashop.be.entities.Coupon;
+import africashop.be.entities.Order;
 import africashop.be.entities.Product;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,6 +29,7 @@ public class VisitorServiceImpl implements VisitorService{
     private final ProductRepo productRepo;
     private final CategoryRepo categoryRepo;
     private final CouponRepo couponRepo;
+    private final OrderRepo orderRepo;
     @Override
     public List<ProductDto> getAllProducts() {
         List<Product> products = this.productRepo.findAll();
@@ -103,5 +108,13 @@ public class VisitorServiceImpl implements VisitorService{
     public List<Coupon> getAllCoupons() {return couponRepo.findAll();
     }
 
+    @Override
+    public OrderDto searchOrderByTrackingId(UUID trackingId){
+        Optional<Order> optionalOrder = orderRepo.findByTrackingId(trackingId);
+        if(optionalOrder.isPresent()){
+            return optionalOrder.get().getOrderDto();
+        }
+        return null;
+    }
 
 }

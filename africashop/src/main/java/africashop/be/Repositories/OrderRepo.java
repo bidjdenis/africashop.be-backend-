@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public interface OrderRepo extends JpaRepository<Order,Long> {
     boolean existsByUserIdAndOrderStatus(Long userId, OrderStatus pending);
@@ -13,4 +15,6 @@ public interface OrderRepo extends JpaRepository<Order,Long> {
     Order findByUserIdAndOrderStatus(Long userId, OrderStatus pending);
 
     List<Order> findByUserIdAndOrderStatusIn(Long userId, List<OrderStatus> placed);
+
+    Optional<Order> findByTrackingId(UUID trackingId);
 }
