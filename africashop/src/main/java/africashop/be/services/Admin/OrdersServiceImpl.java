@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,5 +24,23 @@ public class OrdersServiceImpl implements OrdersService{
                         OrderStatus.Canceled));
 
         return orderList.stream().map(Order::getOrderDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public OrderDto changeOrderStatus(Long orderId, String status){
+        Optional<Order> optionalOrder = orderRepo.findById(orderId);
+        if(optionalOrder.isPresent()){
+            Order order = optionalOrder.get();
+
+            if(Objects.equals(status, "Shipped")){
+                order.setOrderStatus(OrderStatus.Shipped);
+            }else if(Objects.equals(status, "Delivered")){
+                order.setOrderStatus(OrderStatus.Delivered);
+            }else if(Objects.equals(status, "Canceled")) {
+                order.setOrderStatus(OrderStatus.Canceled);
+            }
+            return orderRepo.save(order).getOrderDto();
+        }
+        return null;
     }
 }
