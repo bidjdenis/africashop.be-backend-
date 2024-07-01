@@ -17,4 +17,6 @@ public interface OrderRepo extends JpaRepository<Order,Long> {
     List<Order> findByUserIdAndOrderStatusIn(Long userId, List<OrderStatus> placed);
 
     Optional<Order> findByTrackingId(UUID trackingId);
+
+    List<Order> findAllByOrderStatusIn(List<OrderStatus> placed);
 }
