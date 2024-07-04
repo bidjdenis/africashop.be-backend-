@@ -4,10 +4,7 @@ import africashop.be.entities.Order;
 import africashop.be.enums.OrderStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public interface OrderRepo extends JpaRepository<Order,Long> {
     boolean existsByUserIdAndOrderStatus(Long userId, OrderStatus pending);
@@ -19,4 +16,8 @@ public interface OrderRepo extends JpaRepository<Order,Long> {
     Optional<Order> findByTrackingId(UUID trackingId);
 
     List<Order> findAllByOrderStatusIn(List<OrderStatus> placed);
+
+    List<Order> findByDateBetweenAndOrderStatus(Date startOfMonth, Date endOfMonth, OrderStatus delivered);
+
+    Long countByOrderStatus(OrderStatus status);
 }

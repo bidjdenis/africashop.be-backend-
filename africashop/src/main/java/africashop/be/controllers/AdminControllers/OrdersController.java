@@ -1,7 +1,9 @@
 package africashop.be.controllers.AdminControllers;
 
+import africashop.be.dtos.AnalyticsResponse;
 import africashop.be.dtos.OrderDto;
 import africashop.be.services.Admin.OrdersService;
+import africashop.be.services.Admin.OrdersServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,7 @@ import java.util.List;
 public class OrdersController {
 
     private final OrdersService ordersService;
+    private final OrdersServiceImpl service;
 
     @GetMapping("/allOrders")
     public ResponseEntity<List<OrderDto>> getAllOrders(){
@@ -30,5 +33,10 @@ public class OrdersController {
         if(orderDto == null)
             return new ResponseEntity<>("Something went wrong!", HttpStatus.BAD_REQUEST);
         return ResponseEntity.status(HttpStatus.OK).body(orderDto);
+    }
+
+    @GetMapping("/order/analytics")
+    public ResponseEntity<AnalyticsResponse> getAnalytics(){
+        return ResponseEntity.ok(service.calculateAnalytics());
     }
 }
