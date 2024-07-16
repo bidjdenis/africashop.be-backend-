@@ -3,7 +3,9 @@ package africashop.be.entities;
 import africashop.be.dtos.BlogDto;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Data
@@ -17,8 +19,11 @@ public class Blog {
 
     private String title;
 
+    @Lob
+    @Column(columnDefinition = "LONGTEXT")
     private String content;
-
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
     @Lob
@@ -30,7 +35,7 @@ public class Blog {
         blogDto.setId(id);
         blogDto.setTitle(title);
         blogDto.setContent(content);
-        blogDto.setDate(date);
+        blogDto.setDate(new SimpleDateFormat("yyyy-MM-dd").format(date));
         blogDto.setByteImg(img);
         return blogDto;
     }

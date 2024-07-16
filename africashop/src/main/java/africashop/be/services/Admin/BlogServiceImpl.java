@@ -7,6 +7,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Service
 @AllArgsConstructor
@@ -21,7 +24,12 @@ public class BlogServiceImpl implements BlogService{
         blog.setId(blogDto.getId());
         blog.setTitle(blogDto.getTitle());
         blog.setContent(blogDto.getContent());
-        blog.setDate(blogDto.getDate());
+        try {
+            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(blogDto.getDate());
+            blog.setDate(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         blog.setImg(blogDto.getImg().getBytes());
         return blogRepo.save(blog).getDto();
     }
