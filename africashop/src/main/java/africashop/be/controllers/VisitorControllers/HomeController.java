@@ -100,4 +100,18 @@ public class HomeController {
         if(orderDto == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(orderDto);
     }
+
+    @GetMapping("/blogs")
+    public ResponseEntity<List<BlogDto>> getBlogs(){
+        List<BlogDto> blogDtos = visitorService.getAllBlogs();
+        return ResponseEntity.ok(blogDtos);
+    }
+
+    @GetMapping("/blog/{blogId}")
+    public ResponseEntity<BlogDto> getBlogId(@PathVariable Long blogId){
+        BlogDto blogDto = visitorService.getBlogById(blogId).getDto();
+        if(blogDto == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(blogDto);
+    }
+
 }

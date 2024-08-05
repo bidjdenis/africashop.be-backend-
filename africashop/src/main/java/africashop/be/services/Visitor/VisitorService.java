@@ -1,8 +1,10 @@
 package africashop.be.services.Visitor;
 
+import africashop.be.dtos.BlogDto;
 import africashop.be.dtos.OrderDto;
 import africashop.be.dtos.ProductDetailDto;
 import africashop.be.dtos.ProductDto;
+import africashop.be.entities.Blog;
 import africashop.be.entities.Category;
 import africashop.be.entities.Coupon;
 import africashop.be.entities.Product;
@@ -23,6 +25,8 @@ public interface VisitorService {
     List<Category> getAllCategories();
     List<Coupon> getAllCoupons();
     OrderDto searchOrderByTrackingId(UUID trackingId);
+    List<BlogDto> getAllBlogs();
+    Blog getBlogById(Long id);
 
 
 

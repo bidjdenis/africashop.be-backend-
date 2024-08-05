@@ -1,16 +1,11 @@
 package africashop.be.services.Visitor;
 
-import africashop.be.Repositories.CategoryRepo;
-import africashop.be.Repositories.CouponRepo;
-import africashop.be.Repositories.OrderRepo;
-import africashop.be.Repositories.ProductRepo;
+import africashop.be.Repositories.*;
+import africashop.be.dtos.BlogDto;
 import africashop.be.dtos.OrderDto;
 import africashop.be.dtos.ProductDetailDto;
 import africashop.be.dtos.ProductDto;
-import africashop.be.entities.Category;
-import africashop.be.entities.Coupon;
-import africashop.be.entities.Order;
-import africashop.be.entities.Product;
+import africashop.be.entities.*;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,6 +25,8 @@ public class VisitorServiceImpl implements VisitorService{
     private final CategoryRepo categoryRepo;
     private final CouponRepo couponRepo;
     private final OrderRepo orderRepo;
+
+    private final BlogRepo blogRepo;
     @Override
     public List<ProductDto> getAllProducts() {
         List<Product> products = this.productRepo.findAll();
@@ -115,6 +112,18 @@ public class VisitorServiceImpl implements VisitorService{
             return optionalOrder.get().getOrderDto();
         }
         return null;
+    }
+
+    @Override
+    public List<BlogDto> getAllBlogs() {
+        List<Blog> blogs = blogRepo.findAll();
+        return blogs.stream().map(Blog::getDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public Blog getBlogById(Long id) {
+        Optional<Blog> blog = blogRepo.findById(id);
+        return blog.get();
     }
 
 }
