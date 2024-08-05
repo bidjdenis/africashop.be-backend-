@@ -2,6 +2,7 @@ package africashop.be.services.Member;
 
 import africashop.be.Repositories.BlogRepo;
 import africashop.be.dtos.BlogDto;
+import africashop.be.dtos.ProductDetailDto;
 import africashop.be.entities.Blog;
 import africashop.be.entities.Product;
 import africashop.be.services.Member.BlogsService;
@@ -9,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,4 +25,12 @@ public class BlogsServiceImpl implements BlogsService {
         List<Blog> blogs = blogRepo.findAll();
         return blogs.stream().map(Blog::getDto).collect(Collectors.toList());
     }
+
+    @Override
+    public Blog getBlogById(Long id) {
+        Optional<Blog> blog = blogRepo.findById(id);
+        return blog.get();
+    }
+
+
 }
