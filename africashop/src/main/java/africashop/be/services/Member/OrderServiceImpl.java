@@ -60,8 +60,8 @@ public class OrderServiceImpl implements OrderService{
                 cartItemsDto.setReturnedImg(c.getProduct().getImg());
                 cartItemsDtoList.add(cartItemsDto);
 
-                order.setTotalAmount(order.getTotalAmount() + (c.getPrice() * c.getQuantity()));
-                order.setAmount(order.getAmount() + (c.getPrice() * c.getQuantity()));
+                order.setTotalAmount(Math.round((order.getTotalAmount() + (c.getPrice() * c.getQuantity())) * 100.0) / 100.0);
+                order.setAmount(Math.round((order.getAmount() + (c.getPrice() * c.getQuantity())) * 100.0) / 100.0);
                 order.setDate(new Date());
                 order.setTrackingId(UUID.randomUUID());
 
